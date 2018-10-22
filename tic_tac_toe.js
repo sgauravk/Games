@@ -17,6 +17,15 @@ let firstPlayer = readline.question("Enter first player name: ");
 let secondPlayer = readline.question("\nEnter second player name: ");
 
 let firstPlayerSymbol = readline.question("\n"+firstPlayer+" select your symbol 0 or X: ");
+
+while(firstPlayerSymbol != "X" || firstPlayerSymbol == ""){
+  if(firstPlayerSymbol == 0){
+    break;
+  }
+  console.log("\ninvalid symbol, select your symbol 0 or X.");
+  firstPlayerSymbol = readline.question("\n"+firstPlayer+" select your symbol 0 or X: ");
+}
+
 if(firstPlayerSymbol == 0){
   secondPlayerSymbol = "X";
 } else {
@@ -43,11 +52,19 @@ for (let turn=0; turn<9; turn++){
     playerInput = secondPlayerInput;
   }
   let number = readline.question(player+" select a number between 1 to 9: ");
+
+  while(object[number] != " "){
+    console.log("\nbox is already allocate OR invalid input, please try again.\n");
+    number = readline.question(player+" select a number between 1 to 9: ");
+  }
+
   object[number] = symbol;
 
   playerInput.push(number);
 
-  console.log("\n"+initialPattern,"\n "+object[1]+" | "+object[2]+" | "+object[3]+"\n---+---+---\n"+" "+object[4]+" | "+object[5]+" | "+object[6]+"\n---+---+---\n"+" "+object[7]+" | "+object[8]+" | "+object[9]+"\n");
+  console.log("\n"+initialPattern,"\n "+object[1]+" | "+object[2]+" | "+object[3]
+    +"\n---+---+---\n"+" "+object[4]+" | "+object[5]+" | "+object[6]
+    +"\n---+---+---\n"+" "+object[7]+" | "+object[8]+" | "+object[9]+"\n");
 
   for (index=0; index<winningPattern.length; index++){
     if(winningPattern[index].every(isSubset)){
