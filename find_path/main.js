@@ -10,7 +10,7 @@ const playGame = function(side,userLives,emptyObject,path){
       console.log('possible moves are',path,'\n');
       process.exit();
     }
-    if (doPartition(range(1,side*side),side).every(x=>x.some(y=>emptyObject[modifyMove(y)] == '**'))){
+    if (doPartition(range(1,side*side),side).every(x=>x.some(y=>emptyObject[modifyMove(y)] == '()'))){
       console.log('\n- - CONGRATULATIONS YOU ESCAPED SUCCESSFULLY - -\n');
       process.exit();
     }
@@ -21,7 +21,7 @@ const playGame = function(side,userLives,emptyObject,path){
       userLives--;
       console.log('lives remain =',userLives);
     } else {
-      emptyObject[modifyMove(move)] = '**';
+      emptyObject[modifyMove(move)] = '()';
     }
     console.log('\n'+makeBoard(side,createObject(side)));
     console.log('\n'+makeBoard(side,emptyObject)+'\n');

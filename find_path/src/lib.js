@@ -11,7 +11,7 @@ const createObject = function(number){
 const createBorder = function(length){
   let line = ' +';
   for (let count=0; count<length; count++){
-    line += ' -- +';
+    line += '----+';
   }
   return line+' ';
 };
