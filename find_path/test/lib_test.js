@@ -24,7 +24,7 @@ describe('createObject', function(){
 describe('createBorder', function(){
 
   it('should create a border line according to input', function(){
-    assert.equal(createBorder(2),' + -- + -- + ');
+    assert.equal(createBorder(2),' +----+----+ ');
   });
 
   it('should work for 0 also', function(){
