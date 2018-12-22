@@ -6,7 +6,7 @@ const {createObject, createBorder, makeBoard,doPartition,
 const playGame = function(side,userLives,emptyObject,path){
   for (let count=0; count<side*side; count++){
     if(userLives < 1){
-      console.log('you loose... \n better luck next time...\n');
+      console.log('you lose... \n better luck next time...\n');
       console.log('possible moves are',path,'\n');
       process.exit();
     }
@@ -16,7 +16,7 @@ const playGame = function(side,userLives,emptyObject,path){
     }
     let move = read.questionInt('please enter your move: ');
     if (!isValidMove(move,path)){
-      console.log('\n - - - B O O O M - - - \n');
+      console.log('\n ─ ─ ─ B O O O M ─ ─ ─ \n');
       Object.values(emptyObject).map(x=>emptyObject[x] = '  ');
       userLives--;
       console.log('lives remain =',userLives);
@@ -33,7 +33,7 @@ const main = function(){
   let emptyObject = Object.assign(createObject(side));
   Object.values(emptyObject).map(x=>emptyObject[x] = '  ');
   let userLives = side-1;
-  console.log('\n+-----+ welcome to find path +-----+\n');
+  console.log('\n╟═════ welcome to find path ═════╢\n');
   let path = randomPath(doPartition(range(1,side*side),side),side);
   console.log('\n'+makeBoard(side,createObject(side)));
   console.log('\n'+makeBoard(side,emptyObject)+'\n');
