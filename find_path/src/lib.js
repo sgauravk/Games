@@ -8,32 +8,36 @@ const createObject = function(number){
   return result;
 };
 
-const createBorder = function(length){
-  let line = ' +';
-  for (let count=0; count<length; count++){
-    line += '----+';
+const createBorder = function(firstChar,middleChar,endChar,lineType,length){
+  let line = ' ' + firstChar;
+  for (let count = 1; count < length; count++){
+    line += lineType + middleChar;
   }
-  return line+' ';
+  return line + lineType + endChar + ' ';
 };
 
 const makeBoard = function(length, object){
-  let firstLine =  createBorder(length);
+  let firstLine =  createBorder('╔','╤','╗','════',length);
+  let delimeter = ' ║ ';
   let string = '0'
   let board = '';
   let index = 1;
   let indexToStart = 1;
   while(index <= length){
-    let sampleLine = firstLine+'\n';
+    let sampleLine = firstLine + '\n';
     for(let count = indexToStart; count <= length*index; count++){
       if ((''+count).length > 1){ string = ''; }
-      sampleLine += ' | ' + object[string+count];
+      sampleLine += delimeter + object[string+count];
+      delimeter = ' │ ';
     }
-    sampleLine += ' | ';
+    delimeter = ' ║ ';
+    firstLine = createBorder('╟','┼','╢','────',length);
+    sampleLine += ' ║ ';
     board += sampleLine+'\n';
     index++;
     indexToStart += length;
   }
-  board += firstLine;
+  board += createBorder('╚','╧','╝','════',length);
   return board;
 };
 
@@ -72,7 +76,6 @@ const randomPath = function(twoDArray, side){
   }
   return result;
 };
-
 
 const isValidMove = function(move,array){
   return array.includes(move);

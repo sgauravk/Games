@@ -32,7 +32,7 @@ const main = function(){
   let side = +process.argv[2] || 4;
   let emptyObject = Object.assign(createObject(side));
   Object.values(emptyObject).map(x=>emptyObject[x] = '  ');
-  let userLives = 3;
+  let userLives = side-1;
   console.log('\n+-----+ welcome to find path +-----+\n');
   let path = randomPath(doPartition(range(1,side*side),side),side);
   console.log('\n'+makeBoard(side,createObject(side)));
