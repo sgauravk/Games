@@ -23,8 +23,11 @@ const playGame = function(side,userLives,emptyObject,path){
     } else {
       emptyObject[modifyMove(move)] = '()';
     }
-    console.log('\n'+makeBoard(side,createObject(side)));
-    console.log('\n'+makeBoard(side,emptyObject)+'\n');
+    let filledBoxArray = makeBoard(side,createObject(side));
+    let emptyBoxArray = makeBoard(side,emptyObject);
+    for(let index=0; index < filledBoxArray.length; index++){
+      console.log(emptyBoxArray[index] , filledBoxArray[index]);
+    }
   }
 };
 
@@ -35,8 +38,7 @@ const main = function(){
   let userLives = side-1;
   console.log('\n╟═════ welcome to find path ═════╢\n');
   let path = randomPath(doPartition(range(1,side*side),side),side);
-  console.log('\n'+makeBoard(side,createObject(side)));
-  console.log('\n'+makeBoard(side,emptyObject)+'\n');
+  console.log('\n'+makeBoard(side,createObject(side)).join('\n'),'\n');
   playGame(side,userLives,emptyObject,path);
 }
 
