@@ -3,31 +3,45 @@ const read = require('readline-sync');
 const {createObject, createBorder, makeBoard,doPartition,
   range, randomGenerator, randomPath, isValidMove, modifyMove} = require('./src/lib.js');
 
+const checkCondition = function(userLives){
+  return userLives > 0;
+};
+
+const checkUserMove = function(move, path, lives, object){
+  if (!isValidMove(move,path)){
+      console.log('\n ─ ─ ─ B O O O M ─ ─ ─ \n');
+      Object.values(object).map(x=>object[x] = '  ');
+      lives--;
+      console.log('lives remain =',lives);
+    } else {
+      object[modifyMove(move)] = '()';
+    }
+  return;
+};
+
+const printBox = function(filledArray, emptyArray){
+  for(let index=0; index < filledArray.length; index++){
+      console.log(emptyArray[index] , filledArray[index]);
+    }
+  return;
+};
+
 const playGame = function(side,userLives,emptyObject,path){
   for (let count=0; count<side*side; count++){
-    if(userLives < 1){
+    if(!checkCondition(userLives)){
       console.log('you lose... \n better luck next time...\n');
       console.log('possible moves are',path,'\n');
-      process.exit();
+      return;
     }
     if (doPartition(range(1,side*side),side).every(x=>x.some(y=>emptyObject[modifyMove(y)] == '()'))){
       console.log('\n- - CONGRATULATIONS YOU ESCAPED SUCCESSFULLY - -\n');
-      process.exit();
+      return;
     }
     let move = read.questionInt('please enter your move: ');
-    if (!isValidMove(move,path)){
-      console.log('\n ─ ─ ─ B O O O M ─ ─ ─ \n');
-      Object.values(emptyObject).map(x=>emptyObject[x] = '  ');
-      userLives--;
-      console.log('lives remain =',userLives);
-    } else {
-      emptyObject[modifyMove(move)] = '()';
-    }
+    checkUserMove(move, path, userLives, emptyObject);
     let filledBoxArray = makeBoard(side,createObject(side));
     let emptyBoxArray = makeBoard(side,emptyObject);
-    for(let index=0; index < filledBoxArray.length; index++){
-      console.log(emptyBoxArray[index] , filledBoxArray[index]);
-    }
+    printBox(filledBoxArray, emptyBoxArray);
   }
 };
 
@@ -39,7 +53,7 @@ const main = function(){
   console.log('\n╟═════ welcome to find path ═════╢\n');
   let path = randomPath(doPartition(range(1,side*side),side),side);
   console.log('\n'+makeBoard(side,createObject(side)).join('\n'),'\n');
-  playGame(side,userLives,emptyObject,path);
+  playGame(side, userLives, emptyObject, path);
 }
 
 main();
