@@ -16,10 +16,20 @@ const createBorder = function(firstChar,middleChar,endChar,lineType,length){
   return line + lineType + endChar + ' ';
 };
 
+const isValidMove = function(move,array){
+  return array.includes(move);
+};
+
+const modifyMove = function(move){
+  if(move < 10){
+    move = '0'+move;
+  }
+  return ''+move;
+};
+
 const makeBoard = function(length, object){
   let firstLine =  createBorder('╔','╤','╗','════',length);
   let delimeter = ' ║ ';
-  let string = '0';
   let board = [];
   let index = 1;
   let indexToStart = 1;
@@ -27,10 +37,9 @@ const makeBoard = function(length, object){
     board.push(firstLine);
     let sampleLine = "";
     for(let count = indexToStart; count <= length*index; count++){
-      if ((''+count).length > 1) string = '';
-      sampleLine += delimeter + object[string+count];
+      sampleLine += delimeter + object[modifyMove(count)];
       delimeter = ' │ ';
-    }
+    };
     delimeter = ' ║ ';
     firstLine = createBorder('╟','┼','╢','────',length);
     sampleLine += ' ║ ';
@@ -76,17 +85,6 @@ const randomPath = function(twoDArray, side){
     firstElement = secondElement;
   }
   return result;
-};
-
-const isValidMove = function(move,array){
-  return array.includes(move);
-};
-
-const modifyMove = function(move){
-  if(move < 10){
-    move = '0'+move;
-  }
-  return ''+move;
 };
 
 module.exports = {createObject, createBorder, makeBoard,
