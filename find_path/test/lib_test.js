@@ -97,5 +97,6 @@ describe('modifyMove', function(){
 describe('findNeighbours', function(){
   it('should return all Neighbours of a specific posotion in array' ,function(){
     assert.deepEqual(findNeighbours(3,1),[2,4,-2]);
+    assert.deepEqual(findNeighbours(3,5),[4,6,8,2]);
   });
 });
