@@ -94,6 +94,10 @@ const findNeighbours = function(side, count){
   return result;
 };
 
+const validateNeighbours = function(side, neighboursArray){
+  return neighboursArray.filter(x => x <= side*side && x > 0);
+};
+
 module.exports = {createObject, createBorder, makeBoard,
   findNeighbours, doPartition, range, randomGenerator, 
-  randomPath, isValidMove, modifyMove};
+  randomPath, isValidMove, modifyMove, validateNeighbours};

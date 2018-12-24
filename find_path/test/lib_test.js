@@ -1,8 +1,8 @@
 const assert = require('assert');
 
 const {createObject, createBorder, makeBoard,doPartition,
-  range, randomGenerator, randomPath, isValidMove,
-   modifyMove, findNeighbours} = require('../src/lib.js');
+  range, randomGenerator, isValidMove, modifyMove,
+  findNeighbours, validateNeighbours } = require('../src/lib.js');
 
 describe('createObject', function(){
 
@@ -95,8 +95,22 @@ describe('modifyMove', function(){
 });
 
 describe('findNeighbours', function(){
+
   it('should return all Neighbours of a specific posotion in array' ,function(){
     assert.deepEqual(findNeighbours(3,1),[2,4,-2]);
+  });
+
+  it('should return the possible neighbours list when middle count is given', function(){
     assert.deepEqual(findNeighbours(3,5),[4,6,8,2]);
   });
+
+});
+
+describe('validateNeighbours', function(){
+
+  it('should resturn the filtered list of neighbours of a specific count' ,function(){
+    let neighboursList = findNeighbours(3,1);
+    assert.deepEqual(validateNeighbours(3, neighboursList), [2,4]);
+  });
+  
 });
