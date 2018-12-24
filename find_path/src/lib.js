@@ -19,7 +19,7 @@ const createBorder = function(firstChar,middleChar,endChar,lineType,length){
 const makeBoard = function(length, object){
   let firstLine =  createBorder('╔','╤','╗','════',length);
   let delimeter = ' ║ ';
-  let string = '0'
+  let string = '0';
   let board = [];
   let index = 1;
   let indexToStart = 1;
@@ -27,7 +27,7 @@ const makeBoard = function(length, object){
     board.push(firstLine);
     let sampleLine = "";
     for(let count = indexToStart; count <= length*index; count++){
-      if ((''+count).length > 1){ string = ''; }
+      if ((''+count).length > 1) string = '';
       sampleLine += delimeter + object[string+count];
       delimeter = ' │ ';
     }
