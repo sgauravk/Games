@@ -87,6 +87,13 @@ const randomPath = function(twoDArray, side){
   return result;
 };
 
+const findNeighbours = function(side, count){
+  let result = [count-1, count+1, count+side, count-side];
+  if(count%side == 0) result = [count-1, count+side, count-side];
+  if((count-1)%side == 0) result = [count+1, count+side, count-side];
+  return result;
+}
+
 module.exports = {createObject, createBorder, makeBoard,
   doPartition, range, randomGenerator, 
   randomPath, isValidMove, modifyMove};
