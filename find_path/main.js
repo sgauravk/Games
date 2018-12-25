@@ -24,10 +24,12 @@ const checkCondition = function(side, userLives, path) {
 
 const checkUserMove = function(move, path, lives, object) {
   if (!isValidMove(move, path)) {
+    console.clear();
     console.log("\n ─ ─ ─ B O O O M ─ ─ ─ \n");
     lives--;
     console.log("lives remain =", lives);
   } else {
+    console.clear();
     object[modifyMove(move)] = "()";
   }
   return lives;
@@ -50,13 +52,15 @@ const checkWinningCondition = function(side, object){
 
 const winningMsg = () => '\n- - CONGRATULATIONS YOU ESCAPED SUCCESSFULLY - -\n'; 
 
+const getUserMove = () => read.questionInt("please enter your move: ");
+
 const playGame = function(side, userLives, emptyObject, path) {
   for (let count = 0; count < side * side; count++) {
     if (userLives < 1)
       return checkCondition(side, userLives, path)
     if(checkWinningCondition(side, emptyObject))
      return console.log(winningMsg());
-    let move = read.questionInt("please enter your move: ");
+    let move = getUserMove();
     userLives = checkUserMove(move, path, userLives, emptyObject);
     let filledBoxArray = makeBoard(side, createObject(side));
     let emptyBoxArray = makeBoard(side, emptyObject);
