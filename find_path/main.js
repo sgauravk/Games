@@ -10,10 +10,14 @@ const {
   modifyMove
 } = require("./src/lib.js");
 
-const checkCondition = function(userLives, path) {
-  if (userLives > 0) {
-    console.log("you lose... \n better luck next time...\n");
-    console.log("possible moves are", path, "\n");
+const checkCondition = function(side, userLives, path) {
+  if (userLives < 1) {
+    console.log("\n ════ BETTER LUCK NEXT TIME ════ \n");
+    let object = createObject(side);
+    Object.values(object).map(x => (object[x] = "  "));
+    path.map(x => object[modifyMove(x)] = '()');
+    console.log('possible paths are ...\n');
+    console.log(makeBoard(side, object).join('\n'),'\n');
   }
   return;
 };
@@ -21,32 +25,39 @@ const checkCondition = function(userLives, path) {
 const checkUserMove = function(move, path, lives, object) {
   if (!isValidMove(move, path)) {
     console.log("\n ─ ─ ─ B O O O M ─ ─ ─ \n");
-    Object.values(object).map(x => (object[x] = "  "));
     lives--;
     console.log("lives remain =", lives);
   } else {
     object[modifyMove(move)] = "()";
   }
-  return;
+  return lives;
 };
 
 const printMoves = function(filledArray, emptyArray) {
+  console.log();
   for (let index = 0; index < filledArray.length; index++) {
     console.log(emptyArray[index], filledArray[index]);
   }
+  console.log();
   return;
 };
 
+const checkWinningCondition = function(side, object){
+  let userRange = range(1, side * side);
+  let partitionArray = doPartition(userRange, side);
+  return partitionArray.every(x => x.some(y => object[modifyMove(y)] == "()"));
+};
+
+const winningMsg = () => '\n- - CONGRATULATIONS YOU ESCAPED SUCCESSFULLY - -\n'; 
+
 const playGame = function(side, userLives, emptyObject, path) {
   for (let count = 0; count < side * side; count++) {
-    if (userLives < 1) checkCondition(userLives, path);
-    if ( doPartition(range(1, side * side), side).every(
-      x => x.some(y => emptyObject[modifyMove(y)] == "()"))) {
-      console.log("\n- - CONGRATULATIONS YOU ESCAPED SUCCESSFULLY - -\n");
-      return;
-    };
+    if (userLives < 1)
+      return checkCondition(side, userLives, path)
+    if(checkWinningCondition(side, emptyObject))
+     return console.log(winningMsg());
     let move = read.questionInt("please enter your move: ");
-    checkUserMove(move, path, userLives, emptyObject);
+    userLives = checkUserMove(move, path, userLives, emptyObject);
     let filledBoxArray = makeBoard(side, createObject(side));
     let emptyBoxArray = makeBoard(side, emptyObject);
     printMoves(filledBoxArray, emptyBoxArray);
