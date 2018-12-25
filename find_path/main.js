@@ -54,6 +54,10 @@ const playGame = function(side, userLives, emptyObject, path) {
 
 const main = function() {
   let side = +process.argv[2] || difficultyLevel();
+  if (side > 9){
+    console.log('\nside should be less then 10\n');
+    process.exit();
+  }
   let emptyObject = Object.assign(createObject(side));
   Object.values(emptyObject).map(x => (emptyObject[x] = "  "));
   let userLives = side - 1;
