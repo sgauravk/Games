@@ -94,10 +94,65 @@ const findNeighbours = function(side, count){
   return result;
 };
 
-const validateNeighbours = function(side, neighboursArray){
+const validateNeighbours = function(side, count){
+  let neighboursArray = findNeighbours(side, count);
   return neighboursArray.filter(x => x <= side*side && x > 0);
+};
+
+const checkCondition = function(side, userLives, path) {
+  if (userLives < 1) {
+    console.log("\n ════ BETTER LUCK NEXT TIME ════ \n");
+    let object = createObject(side);
+    Object.values(object).map(x => (object[x] = "  "));
+    path.map(x => object[modifyMove(x)] = '()');
+    console.log('possible paths are ...\n');
+    console.log(makeBoard(side, object).join('\n'),'\n');
+  }
+};
+
+const checkUserMove = function(move, path, lives, object) {
+  if (!isValidMove(move, path)) {
+    console.clear();
+    console.log("\n ─ ─ ─ B O O O M ─ ─ ─ \n");
+    lives--;
+    console.log("lives remain =", lives);
+  } else {
+    console.clear();
+    object[modifyMove(move)] = "()";
+  }
+  return lives;
+};
+
+const printMoves = function(filledArray, emptyArray) {
+  console.log();
+  for (let index = 0; index < filledArray.length; index++) {
+    console.log(emptyArray[index], filledArray[index]);
+  }
+  console.log();
+  return;
+};
+
+const checkWinningCondition = function(side, object){
+  let userRange = range(1, side * side);
+  let partitionArray = doPartition(userRange, side);
+  return partitionArray.every(x => x.some(y => object[modifyMove(y)] == "()"));
+};
+
+const initialPossibleMoves = function(side){
+  let rangeStartFrom = (side*(side-1)+1);
+  return range(rangeStartFrom, side*side);
+};
+
+const checkMove = function(possibleMoves, move){
+  if(!possibleMoves.includes(move)){
+    console.log('\n => ...... INVALID move ...... <=');
+    return false;
+  }
+  return true;
 };
 
 module.exports = {createObject, createBorder, makeBoard,
   findNeighbours, doPartition, range, randomGenerator, 
-  randomPath, isValidMove, modifyMove, validateNeighbours};
+  randomPath, isValidMove, modifyMove, validateNeighbours,
+  checkCondition, checkUserMove, printMoves,
+   checkWinningCondition, initialPossibleMoves, checkMove};

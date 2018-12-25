@@ -109,8 +109,7 @@ describe('findNeighbours', function(){
 describe('validateNeighbours', function(){
 
   it('should resturn the filtered list of neighbours of a specific count' ,function(){
-    let neighboursList = findNeighbours(3,1);
-    assert.deepEqual(validateNeighbours(3, neighboursList), [2,4]);
+    assert.deepEqual(validateNeighbours(3, 1), [2,4]);
   });
   
 });
