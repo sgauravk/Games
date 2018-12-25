@@ -16,6 +16,22 @@ const userMove = function(possibleMoves){
   move = getUserMove();
   if(!checkMove(possibleMoves, move)) userMove(possibleMoves);
   return move;
+};
+
+const checkDifficulty = function(userMove){
+  if(![1,2,3].includes(userMove)){
+    console.log('\nyou have only 3 choises, please select a valid option.')
+    return difficultyLevel();
+  }
+};
+
+const difficultyLevel = function(){
+  const levels = '\n1 - Easy \n2 - Medium \n3 - Hard\n';
+  let side = {1: 4, 2: 6, 3: 8};
+  console.log('\nplease select a difficulty level -:\n' + levels);
+  let userChoise = read.questionInt( 'select difficulty level: ');
+  checkDifficulty(userChoise);
+  return side[userChoise];
 }
 
 const playGame = function(side, userLives, emptyObject, path) {
@@ -37,7 +53,7 @@ const playGame = function(side, userLives, emptyObject, path) {
 };
 
 const main = function() {
-  let side = +process.argv[2] || 4;
+  let side = +process.argv[2] || difficultyLevel();
   let emptyObject = Object.assign(createObject(side));
   Object.values(emptyObject).map(x => (emptyObject[x] = "  "));
   let userLives = side - 1;
