@@ -104,7 +104,7 @@ const checkCondition = function(side, userLives, path) {
     console.log("\n ════ BETTER LUCK NEXT TIME ════ \n");
     let object = createObject(side);
     Object.values(object).map(x => (object[x] = "  "));
-    path.map(x => object[modifyMove(x)] = '()');
+    path.map(x => object[modifyMove(x)] = '🐃');
     console.log('possible paths are ...\n');
     console.log(makeBoard(side, object).join('\n'),'\n');
   }
@@ -118,7 +118,7 @@ const checkUserMove = function(move, path, lives, object) {
     console.log("lives remain =", lives);
   } else {
     console.clear();
-    object[modifyMove(move)] = "()";
+    object[modifyMove(move)] = "🚴";
   }
   return lives;
 };
@@ -135,7 +135,7 @@ const printMoves = function(filledArray, emptyArray) {
 const checkWinningCondition = function(side, object){
   let userRange = range(1, side * side);
   let partitionArray = doPartition(userRange, side);
-  return partitionArray.every(x => x.some(y => object[modifyMove(y)] == "()"));
+  return partitionArray.every(x => x.some(y => object[modifyMove(y)] == "🚴"));
 };
 
 const initialPossibleMoves = function(side){
@@ -151,8 +151,15 @@ const checkMove = function(possibleMoves, move){
   return true;
 };
 
+const findCheatMove = function(path, moves){
+  for(let count=0; count<path.length; count++){
+    if(moves.includes(path[count])) return path[count];
+  }
+  return;
+};
+  
 module.exports = {createObject, createBorder, makeBoard,
   findNeighbours, doPartition, range, randomGenerator, 
   randomPath, isValidMove, modifyMove, validateNeighbours,
-  checkCondition, checkUserMove, printMoves,
+  checkCondition, checkUserMove, printMoves, findCheatMove,
    checkWinningCondition, initialPossibleMoves, checkMove};

@@ -2,9 +2,9 @@ const read = require("readline-sync");
 
 const {
   createObject, makeBoard, doPartition, range,
-  randomPath, isValidMove, modifyMove, 
+  randomPath, isValidMove, modifyMove, findCheatMove,
   validateNeighbours, checkCondition, checkUserMove,
-   printMoves, checkWinningCondition, initialPossibleMoves,
+  printMoves, checkWinningCondition, initialPossibleMoves,
   checkMove } = require("./src/lib.js");
 
 const winningMsg = () => '\n- - CONGRATULATIONS YOU ESCAPED SUCCESSFULLY - -\n'; 
@@ -20,7 +20,7 @@ const userMove = function(possibleMoves){
 
 const checkDifficulty = function(userMove){
   if(![1,2,3].includes(userMove)){
-    console.log('\nyou have only 3 choises, please select a valid option.')
+    console.log('\nyou have only 3 choises, please select a valid option.');
     return difficultyLevel();
   }
 };
@@ -40,13 +40,13 @@ const playGame = function(side, userLives, emptyObject, path) {
     if (userLives < 1)
       return checkCondition(side, userLives, path)
     if(checkWinningCondition(side, emptyObject))
-     return console.log(winningMsg());
+      return console.log(winningMsg());
     move = userMove(possibleMoves);
     userLives = checkUserMove(move, path, userLives, emptyObject);
     let filledBoxArray = makeBoard(side, createObject(side));
     let emptyBoxArray = makeBoard(side, emptyObject);
     printMoves(filledBoxArray, emptyBoxArray);
-    if(emptyObject[modifyMove(move)]=='()'){
+    if(emptyObject[modifyMove(move)]=='🚴'){
       possibleMoves = validateNeighbours(side, move);
     }
   }
