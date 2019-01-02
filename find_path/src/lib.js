@@ -46,7 +46,7 @@ const makeBoard = function(length, object){
     board.push(sampleLine);
     index++;
     indexToStart += length;
-  }
+  };
   board.push(createBorder('╚','╧','╝','════',length));
   return board;
 };
@@ -58,7 +58,7 @@ const doPartition = function(array,length){
     let sampleArray = array.slice(0);
     result.push(sampleArray.splice(indexToStart,length));
     indexToStart+=length;
-  }
+  };
   return result;
 };
 
@@ -68,7 +68,7 @@ const range = function(num1,num2){
   let min = Math.min(num1,num2);
   for(let count=min; count<=max; count++){
     result.push(count);
-  }
+  };
   return result;
 };
 
@@ -83,14 +83,14 @@ const randomPath = function(twoDArray, side){
     let secondElement = randomGenerator(twoDArray[count]);
     result = result.concat(range(firstElement+side,secondElement));
     firstElement = secondElement;
-  }
+  };
   return result;
 };
 
 const findNeighbours = function(side, count){
-  let result = [count-1, count+1, count+side, count-side];
-  if(count%side == 0) result = [count-1, count+side, count-side];
-  if((count-1)%side == 0) result = [count+1, count+side, count-side];
+  let result = [count-side, count+1, count-1, count+side];
+  if(count%side == 0) result = [count-side, count-1, count+side];
+  if((count-1)%side == 0) result = [count-side, count+1, count+side];
   return result;
 };
 
@@ -107,7 +107,7 @@ const checkCondition = function(side, userLives, path) {
     path.map(x => object[modifyMove(x)] = '🐃');
     console.log('possible paths are ...\n');
     console.log(makeBoard(side, object).join('\n'),'\n');
-  }
+  };
 };
 
 const checkUserMove = function(move, path, lives, object) {
@@ -119,7 +119,7 @@ const checkUserMove = function(move, path, lives, object) {
   } else {
     console.clear();
     object[modifyMove(move)] = "🚴";
-  }
+  };
   return lives;
 };
 
@@ -127,7 +127,7 @@ const printMoves = function(filledArray, emptyArray) {
   console.log();
   for (let index = 0; index < filledArray.length; index++) {
     console.log(emptyArray[index], filledArray[index]);
-  }
+  };
   console.log();
   return;
 };
@@ -147,19 +147,19 @@ const checkMove = function(possibleMoves, move){
   if(!possibleMoves.includes(move)){
     console.log('\n => ...... INVALID move ...... <=');
     return false;
-  }
+  };
   return true;
 };
 
 const findCheatMove = function(path, moves){
   for(let count=0; count<path.length; count++){
     if(moves.includes(path[count])) return path[count];
-  }
+  };
   return;
 };
-  
-module.exports = {createObject, createBorder, makeBoard,
+
+module.exports = { createObject, createBorder, makeBoard,
   findNeighbours, doPartition, range, randomGenerator, 
   randomPath, isValidMove, modifyMove, validateNeighbours,
   checkCondition, checkUserMove, printMoves, findCheatMove,
-   checkWinningCondition, initialPossibleMoves, checkMove};
+  checkWinningCondition, initialPossibleMoves, checkMove };
