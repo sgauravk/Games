@@ -48,7 +48,7 @@ const playGame = function(side, userLives, emptyObject, path) {
     let filledBoxArray = makeBoard(side, createObject(side));
     let emptyBoxArray = makeBoard(side, emptyObject);
     printMoves(filledBoxArray, emptyBoxArray);
-    if(emptyObject[modifyMove(move)]=='🚴'){
+    if(emptyObject[modifyMove(move)]=='🚴 '){
       possibleMoves = validateNeighbours(side, move);
     };
   };
